@@ -10,29 +10,23 @@
 }
 
 .spanborder> span, .spanborder ul li{
-  color: darkblue;
-  font-size: 40px;
+  color: gold;
+  font-size: 20px;
+  background-color: grey
+
+}
+
 
 
 }
 
-
-.colortext> a{
-  color: gray;
-
-}
-
-.font> p{
-  font-style: italic;
-  font-size: 30px;
-  font-family: "Times New Roman";
 
 }
 
 .backgroundposition{
   background-position: center;
   background-size: 100%;
-  background-image: linear-gradient(lightgray, skyblue);
+  background-image: linear-gradient(lightgray,lightgreen);
 
 
 
