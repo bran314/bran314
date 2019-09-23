@@ -17,9 +17,15 @@
 }
 
 
+.colortext> a{
+  color: gray;
 
 }
 
+.font> p{
+  font-style: italic;
+  font-size: 30px;
+  font-family: "Times New Roman";
 
 }
 
