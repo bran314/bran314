@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Brandon H Quiz</title>
+    <link rel="stylesheet" type="text/css" href= "fonts.css" >
+</head>
+
+<body>
+    <div class="container">
+        <div id="quiz">
+            <h3>Brandon h Quiz</h3>
+            <p id="completion">Question x of y</p>
+            <p id="prompt"></p>
+            <div class="answers">
+                <button id="btn0"><span id="choice0"></span></button>
+                <button id="btn1"><span id="choice1"></span></button>
+                <button id="btn2"><span id="choice2"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var prompts = [
+            new prompt("who was the first president of the USA?", ["George Washington", "Benjamin Franklin", "Thomas Edison"], "George Washington"),
+            new prompt("what color is the box? ", ["green", "red","blue"], "green"),
+            new prompt("henry bought 12 pizzas. Each pizza cost $12.00. How much did gary spend?", ["$136.00", "$144.00", "$24.00"], "$144.00"),
+            new prompt("What place value is 3 in the number 300?", ["Tens place", "Ones place","Hundreds place"], "Hundreds place"),
+            new prompt("100 x 10 = ", ["$1001", "$1010", "$1000"], "$1000"),
+            new prompt("What place value is 9 in the number 90?", ["Tens place", "Ones place","Hundreds place"], "Tens place"),
+            new prompt("how many states are in the USA?", ["48", "51", "50"], "50"),
+        ];
+
+        var quiz = new Quiz(prompts);
+
+        function Quiz(prompts) {
+            this.promptIndex = 0;
+            this.prompts = prompts;
+            this.score = 0;
+        }
+
+        Quiz.prototype.getIndex = function() {
+            return this.prompts[this.promptIndex];
+        }
+
+        Quiz.prototype.choice = function(answer) {
+            if(this.getIndex().correct(answer)) {
+                this.score++;
+        }
+            this.promptIndex++;
+        }
+
+        Quiz.prototype.ended = function() {
+            return this.promptIndex === this.prompts.length;
+        }
+
+        function prompt(question, choices, answer) {
+            this.question = question;
+            this.choices = choices;
+            this.answer = answer;
+        }
+
+        prompt.prototype.correct = function(choice) {
+            return this.answer === choice;
+        }
+
+        function choice(num, choice) {
+            var button = document.getElementById(num);
+            button.onclick = function() {
+                quiz.choice(choice);
+                submit();
+            }
+        };
+
+        function showCompletion() {
+            var currentPrompt = quiz.promptIndex + 1;
+            var element = document.getElementById("completion");
+            element.innerHTML = "Question " + currentPrompt + " of " + quiz.prompts.length;
+        };
+
+        function showScore() {
+            var end = "<h3>You have reached the end of the quiz.</h3>";
+            end += "<h2 id='score'> You scored: " + quiz.score + " out of 7" +"</h2>";
+            var element = document.getElementById("quiz");
+            element.innerHTML = end;
+            if (quiz.score >=5){
+              alert("You did it!");
+            }else{
+              alert("try again :(")
+            }
+        };
+
+        function submit() {
+            if(quiz.ended()) {
+                showScore();
+            }
+            else {
+                var element = document.getElementById("prompt");
+                element.innerHTML = quiz.getIndex().question;
+
+                var choices = quiz.getIndex().choices;
+                for(var i = 0; i < choices.length; i++) {
+                    var element = document.getElementById("choice" + i);
+                    element.innerHTML = choices[i];
+                    choice("btn" + i, choices[i]);
+                }
+                showCompletion();
+            }
+        };
+
+        submit();
+    </script>
+</body>
+</html>
